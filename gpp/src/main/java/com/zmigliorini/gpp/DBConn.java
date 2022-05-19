@@ -1,10 +1,15 @@
 package com.zmigliorini.gpp;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 /**
  * @author zmigliorini
- *
+ * Class to handle connecting to MySQL database and executing queries.
  */
 public class DBConn {
 	
@@ -36,18 +41,29 @@ public class DBConn {
 	private ResultSet rs;
 	private PreparedStatement ps;
 	
+	/**
+	 * 
+	 * @param url the url of the database
+	 * @param username username for database access
+	 * @param password password for database access
+	 */
 	public DBConn(String url, String username, String password) {
 		this.url = url;
 		this.username = username;
 		this.password = password;
 	}
 	
+	/**
+	 * Attempt to connect to the MySQL database
+	 * @throws SQLException
+	 */
 	protected void connectDB () throws SQLException {
 		conn = DriverManager.getConnection(url, username, password);
 	}
 	
 	/**
-	 * 
+	 * Run a SELECT query given a country name and return a ResultSet object containing the header
+	 * 	and a single record from table gpp.countries
 	 * @param countryName name of the country to retrieve data on
 	 * @return ResultSet object of the single record retrieved
 	 * @throws SQLException
@@ -62,30 +78,4 @@ public class DBConn {
 		return rs;
 	}
 	
-	
-	/**
-	 * 
-	 * @param args
-	 * Testing only
-	 */
-	public static void main(String args[]) {
-		DBConn dbConn = new DBConn("jdbc:mysql://localhost:3306/gpp", "admin", "password");
-		try {
-			dbConn.connectDB();
-			ResultSet set = dbConn.queryCountry("United States of America");
-			ResultSetMetaData rsmd = set.getMetaData();
-					
-			
-			while (set.next()){
-				for (int i=1; i<rsmd.getColumnCount(); i++) {
-					if (i > 1) System.out.print(",  ");
-			        System.out.print(rsmd.getColumnName(i) + ": " + set.getString(i));
-				}
-			} 
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
 }
