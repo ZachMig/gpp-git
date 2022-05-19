@@ -2,13 +2,11 @@ package com.zmigliorini.gpp;
 
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-//feature/1
 
 @RestController
 public class Controller {
@@ -21,13 +19,16 @@ public class Controller {
 	
 	@GetMapping("/country")
 	public Country getCountry(@RequestParam(value="name") String name) { 
-		
+		Country country = null;
 		ResultSet set = null;
 		
 		try {
 			conn.connectDB();
 		} catch (SQLException e) {
 			System.err.println("SQLException on db connection attempt.");
+			System.err.println("Error Code = " + e.getErrorCode());
+			System.err.println("SQL state = " + e.getSQLState());
+			System.err.println("Message = " + e.getMessage());
 			e.printStackTrace();
 		}
 		
@@ -35,6 +36,9 @@ public class Controller {
 			set = conn.queryCountry(name);
 		} catch (SQLException e) {
 			System.err.println("SQLException on query attempt.");
+			System.err.println("Error Code = " + e.getErrorCode());
+			System.err.println("SQL state = " + e.getSQLState());
+			System.err.println("Message = " + e.getMessage());
 			e.printStackTrace();
 		}
 		
@@ -44,19 +48,20 @@ public class Controller {
 			return null;
 		}
 		
-		Country country = new Country(set);
+		try {
+			country = new Country(set);
+		} catch (IllegalArgumentException e) {
+			System.err.println("Caught IllegalArgumentException when calling constructor Country(ResultSet set).");
+			e.printStackTrace();
+		}
 		
-//		try {
-//			ResultSetMetaData rsmd = set.getMetaData();
-//			
-//		} catch (SQLException e) {
-//			System.err.println("SQLException on ResultSet parsing.");
-//			e.printStackTrace();
-//		}
+		//If somehow country object still null after constructor
+		if (country == null) {
+			System.err.println("No exception but Country object still null after constructor call.\n Returning null to Jackson.");
+			return null;
+		}
 		
-		
-		
-		return null;
+		return country;
 		
 	}
 	
