@@ -6,6 +6,8 @@ import java.sql.ResultSetMetaData;
 
 public class Country {
 	
+	//Number of columns a record in gpp.countries table must have
+	private final int numColumns = 20;
 	
 	private final int id;
 	private final String name;
@@ -28,8 +30,52 @@ public class Country {
 	private final String tradeBloc;
 	private final String milAlliance;
 	
-	public Country(ResultSet set) {
-		
+	/**
+	 * 
+	 * @param set A non-null ResultSet object consisting of a header and one record representing a country 
+	 * 	from 'countries' table in 'gpp' database. 
+	 */
+	public Country(ResultSet set) throws IllegalArgumentException {
+		try {
+			set.next(); //Skip the header
+			ResultSetMetaData rsmd = set.getMetaData();
+			
+			//Confirm correct number of columns in set, throw IllegalArgumentException otherwise
+			if (rsmd.getColumnCount() != this.numColumns) {
+				throw new IllegalArgumentException("ResultSet object contains " + rsmd.getColumnCount() 
+					+ " number of columns, Country constructor expecting " + this.numColumns + " number of columns.");
+			}
+			
+			//set is valid, instantiate Country object
+			this.id = set.getInt(1);
+			this.name = set.getString(2);
+			this.popM = set.getInt(3);
+			this.sizeKM2 = set.getInt(4);
+			this.birthRate = set.getDouble(5);
+			this.avgElevationMeters = set.getInt(6);
+			this.isLandlocked = set.getBoolean(7);
+			this.gdpM = set.getInt(8);
+			this.importM = set.getInt(9);
+			this.exportM = set.getInt(10);
+			this.standingArmyK = set.getInt(11);
+			this.navalDispTons = set.getInt(12);
+			this.numWarplanes = set.getInt(13);
+			this.continent = set.getString(14);
+			this.religion = set.getString(15);
+			this.ethnicity = set.getString(16);
+			this.language = set.getString(17);
+			this.government = set.getString(18);
+			this.tradeBloc = set.getString(19);
+			this.milAlliance = set.getString(20);
+			
+		} catch (SQLException e) {
+			System.err.println("Caught SQLException in Country(ResultSet set) constructor.");
+			System.err.println("Error Code = " + e.getErrorCode());
+			System.err.println("SQL state = " + e.getSQLState());
+			System.err.println("Message = " + e.getMessage());
+			e.printStackTrace();
+			throw new IllegalArgumentException("Error attempting to parse ResultSet set in Country constructor");
+		}
 	}
 	
 	public Country(int id, String name, int popM, int sizeKM2, double birthRate, int avgElevationMeters,
@@ -57,6 +103,10 @@ public class Country {
 		this.government = government;
 		this.tradeBloc = tradeBloc;
 		this.milAlliance = milAlliance;
+	}
+	
+	protected int getNumColumns() {
+		return this.numColumns;
 	}
 	
 	protected int getId() {
