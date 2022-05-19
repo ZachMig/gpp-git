@@ -17,10 +17,23 @@ public class Controller {
 	
 	private DBConn conn = new DBConn(url, username, password);
 	
+	
+	
+	/**
+	 * 
+	 * @param name country name as HTTP GET parameter
+	 * 	When provided by client, whitespace should be replaced by underlines 
+	 * 	and this method will expect and handle underlines.
+	 * @return a Country object for JSON serialization, or NULL if there is 
+	 * 	a problem creating the object or locating the record in DB.
+	 */
 	@GetMapping("/country")
 	public Country getCountry(@RequestParam(value="name") String name) { 
 		Country country = null;
 		ResultSet set = null;
+		
+		//Replace underlines that client is instructed to use, and trim whitespace.
+		name = name.replace("_", " ").trim();
 		
 		try {
 			conn.connectDB();
