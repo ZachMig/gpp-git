@@ -1,15 +1,19 @@
 package com.zmigliorini.gpp;
 
 import java.sql.SQLException;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 
+
+@JsonIgnoreProperties(value = {"numColumns"})
 public class Country {
 	
 	//Number of columns a record in gpp.countries table must have
-	private final int numColumns = 20;
+	private final int numColumns = 19;
 	
-	private final int id;
 	private final String name;
 	private final int popM;
 	private final int sizeKM2;
@@ -47,26 +51,25 @@ public class Country {
 			}
 			
 			//set is valid, instantiate Country object
-			this.id = set.getInt(1);
-			this.name = set.getString(2);
-			this.popM = set.getInt(3);
-			this.sizeKM2 = set.getInt(4);
-			this.birthRate = set.getDouble(5);
-			this.avgElevationMeters = set.getInt(6);
-			this.isLandlocked = set.getBoolean(7);
-			this.gdpM = set.getInt(8);
-			this.importM = set.getInt(9);
-			this.exportM = set.getInt(10);
-			this.standingArmyK = set.getInt(11);
-			this.navalDispTons = set.getInt(12);
-			this.numWarplanes = set.getInt(13);
-			this.continent = set.getString(14);
-			this.religion = set.getString(15);
-			this.ethnicity = set.getString(16);
-			this.language = set.getString(17);
-			this.government = set.getString(18);
-			this.tradeBloc = set.getString(19);
-			this.milAlliance = set.getString(20);
+			this.name = set.getString(1);
+			this.popM = set.getInt(2);
+			this.sizeKM2 = set.getInt(3);
+			this.birthRate = set.getDouble(4);
+			this.avgElevationMeters = set.getInt(5);
+			this.isLandlocked = set.getBoolean(6);
+			this.gdpM = set.getInt(7);
+			this.importM = set.getInt(8);
+			this.exportM = set.getInt(9);
+			this.standingArmyK = set.getInt(10);
+			this.navalDispTons = set.getInt(11);
+			this.numWarplanes = set.getInt(12);
+			this.continent = set.getString(13);
+			this.religion = set.getString(14);
+			this.ethnicity = set.getString(15);
+			this.language = set.getString(16);
+			this.government = set.getString(17);
+			this.tradeBloc = set.getString(18);
+			this.milAlliance = set.getString(19);
 			
 		} catch (SQLException e) {
 			System.err.println("Caught SQLException in Country(ResultSet set) constructor.");
@@ -78,12 +81,11 @@ public class Country {
 		}
 	}
 	
-	public Country(int id, String name, int popM, int sizeKM2, double birthRate, int avgElevationMeters,
+	public Country(String name, int popM, int sizeKM2, double birthRate, int avgElevationMeters,
 			boolean isLandlocked, int gdpM, int importM, int exportM, int standingArmyK, int navalDispTons,
 			int numWarplanes, String continent, String religion, String ethnicity, String language, String government,
 			String tradeBloc, String milAlliance) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.popM = popM;
 		this.sizeKM2 = sizeKM2;
@@ -105,106 +107,102 @@ public class Country {
 		this.milAlliance = milAlliance;
 	}
 	
-	protected int getNumColumns() {
+	public int getNumColumns() {
 		return this.numColumns;
 	}
+
 	
-	protected int getId() {
-		return id;
-	}
-
-
-	protected String getName() {
+	public String getName() {
 		return name;
 	}
 
 
-	protected int getPopM() {
+	public int getPopM() {
 		return popM;
 	}
 
 
-	protected int getSizeKM2() {
+	public int getSizeKM2() {
 		return sizeKM2;
 	}
 
 
-	protected double getBirthRate() {
+	public double getBirthRate() {
 		return birthRate;
 	}
 
 
-	protected int getAvgElevationMeters() {
+	public int getAvgElevationMeters() {
 		return avgElevationMeters;
 	}
 
 
-	protected boolean isLandlocked() {
+	public boolean isLandlocked() {
 		return isLandlocked;
 	}
 
 
-	protected int getGdpM() {
+	public int getGdpM() {
 		return gdpM;
 	}
 
 
-	protected int getImportM() {
+	public int getImportM() {
 		return importM;
 	}
 
 
-	protected int getExportM() {
+	public int getExportM() {
 		return exportM;
 	}
 
 
-	protected int getStandingArmyK() {
+	public int getStandingArmyK() {
 		return standingArmyK;
 	}
 
 
-	protected int getNavalDispTons() {
+	public int getNavalDispTons() {
 		return navalDispTons;
 	}
 
 
-	protected int getNumWarplanes() {
+	public int getNumWarplanes() {
 		return numWarplanes;
 	}
 
 
-	protected String getContinent() {
+	public String getContinent() {
 		return continent;
 	}
 
 
-	protected String getReligion() {
+	public String getReligion() {
 		return religion;
 	}
 
 
-	protected String getEthnicity() {
+	public String getEthnicity() {
 		return ethnicity;
 	}
 
 
-	protected String getLanguage() {
+	public String getLanguage() {
 		return language;
 	}
 
 
-	protected String getGovernment() {
+	public String getGovernment() {
 		return government;
 	}
 
 
-	protected String getTradeBloc() {
+	public String getTradeBloc() {
 		return tradeBloc;
 	}
 
 
-	protected String getMilAlliance() {
+	public String getMilAlliance() {
 		return milAlliance;
 	}
 

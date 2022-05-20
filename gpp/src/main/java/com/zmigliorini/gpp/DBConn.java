@@ -14,9 +14,9 @@ import java.sql.SQLException;
 public class DBConn {
 	
 	private Connection conn;
-	private final String url;// = "jdbc:mysql://localhost:3306/gpp";
-	private final String username;// = "admin";
-	private final String password;// = "password";
+	private final String url;
+	private final String username;
+	private final String password;
 	
 	private String selectQuery = "SELECT C.name, C.pop_m, C.size_km2, C.birth_rate, C.avg_elevation_meters, C.is_landlocked, "
 			+ "C.gdp_m, C.import_m, C.export_m, C.standing_army_k, C.naval_disp_tons, C.num_warplanes, "
