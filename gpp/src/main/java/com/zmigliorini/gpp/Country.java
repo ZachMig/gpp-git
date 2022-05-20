@@ -137,7 +137,7 @@ public class Country {
 	}
 
 
-	public boolean isLandlocked() {
+	public boolean getIsLandlocked() {
 		return isLandlocked;
 	}
 
@@ -205,8 +205,6 @@ public class Country {
 	public String getMilAlliance() {
 		return milAlliance;
 	}
-
-
 
 	
 }
