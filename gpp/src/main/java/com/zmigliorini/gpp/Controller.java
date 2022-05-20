@@ -17,6 +17,14 @@ public class Controller {
 	
 	private DBConn conn = new DBConn(url, username, password);
 	
+	public class Test {
+		int id =1;
+		String name = "testname";
+		
+		public Test () {
+			
+		}
+	}
 	
 	
 	/**
@@ -27,7 +35,9 @@ public class Controller {
 	 * @return a Country object for JSON serialization, or NULL if there is 
 	 * 	a problem creating the object or locating the record in DB.
 	 */
-	@GetMapping("/country")
+	@GetMapping(
+			value = "/country"
+	)
 	public Country getCountry(@RequestParam(value="name") String name) { 
 		Country country = null;
 		ResultSet set = null;
@@ -73,6 +83,9 @@ public class Controller {
 			System.err.println("No exception but Country object still null after constructor call.\n Returning null to Jackson.");
 			return null;
 		}
+		
+		country.getAvgElevationMeters();
+		//confirm not null lol
 		
 		return country;
 		
