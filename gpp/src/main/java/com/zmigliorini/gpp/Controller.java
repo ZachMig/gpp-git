@@ -1,7 +1,5 @@
 package com.zmigliorini.gpp;
 
-import java.sql.SQLException;
-import java.sql.ResultSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,21 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
 	@Autowired
 	private CountryRepository countryRepo;
-	
-	private final String url = "jdbc:mysql://localhost:3306/gpp";
-	private final String username = "java";
-	private final String password = "password";
-	
-	private DBConn conn = new DBConn(url, username, password);
-	
-	public class Test {
-		int id =1;
-		String name = "testname";
-		
-		public Test () {
-			
-		}
-	}
 	
 	
 	/**
@@ -42,6 +25,9 @@ public class Controller {
 			value = "/country"
 	)
 	public Country getCountry(@RequestParam(value="name") String name) { 
+		
+		return countryRepo.findByName(name.replace("_", " ").trim());
+		
 //		Country country = null;
 //		ResultSet set = null;
 //		
@@ -90,7 +76,7 @@ public class Controller {
 //		
 //		return country;
 		
-		return null;
+		//return null;
 		
 	}
 	

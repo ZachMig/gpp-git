@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -54,26 +56,33 @@ public class Country {
 	@Column(name="num_warplanes")
 	private Integer numWarplanes;
 	
-	@Column(name="continent")
-	private String continent;
+	@ManyToOne
+	@JoinColumn(name="continentID", insertable=false, updatable=false)
+	private Continent continent;
 	
-	@Column(name="religion")
-	private String religion;
+	@ManyToOne
+	@JoinColumn(name="religionID", insertable=false, updatable=false)
+	private Religion religion;
 	
-	@Column(name="ethnicity")
-	private String ethnicity;
+	@ManyToOne
+	@JoinColumn(name="ethnicityID", insertable=false, updatable=false)
+	private Ethnicity ethnicity;;
 	
-	@Column(name="language")
-	private String language;
+	@ManyToOne
+	@JoinColumn(name="languageID", insertable=false, updatable=false)
+	private Language language;
 	
-	@Column(name="government")
-	private String government;
+	@ManyToOne
+	@JoinColumn(name="governmentID", insertable=false, updatable=false)
+	private Government government;
 	
-	@Column(name="trade_bloc")
-	private String tradeBloc;
+	@ManyToOne
+	@JoinColumn(name="trade_blocID", insertable=false, updatable=false)
+	private TradeBloc tradeBloc;
 	
-	@Column(name="mil_alliance")
-	private String milAlliance;
+	@ManyToOne
+	@JoinColumn(name="allianceID", insertable=false, updatable=false)
+	private Alliance alliance;
 	
 	public void setId(Integer id) {
 		this.id = id;
@@ -114,26 +123,89 @@ public class Country {
 	public void setNumWarplanes(Integer numWarplanes) {
 		this.numWarplanes = numWarplanes;
 	}
-	public void setContinent(String continent) {
+	public void setContinent(Continent continent) {
 		this.continent = continent;
 	}
-	public void setReligion(String religion) {
+	public void setReligion(Religion religion) {
 		this.religion = religion;
 	}
-	public void setEthnicity(String ethnicity) {
+	public void setEthnicity(Ethnicity ethnicity) {
 		this.ethnicity = ethnicity;
 	}
-	public void setLanguage(String language) {
+	public void setLanguage(Language language) {
 		this.language = language;
 	}
-	public void setGovernment(String government) {
+	public void setGovernment(Government government) {
 		this.government = government;
 	}
-	public void setTradeBloc(String tradeBloc) {
+	public void setTradeBloc(TradeBloc tradeBloc) {
 		this.tradeBloc = tradeBloc;
 	}
-	public void setMilAlliance(String milAlliance) {
-		this.milAlliance = milAlliance;
+	public void setMilAlliance(Alliance alliance) {
+		this.alliance = alliance;
 	}
-		
+	
+	public Integer getId() {
+		return id;
+	}
+	public String getName() {
+		return name;
+	}
+	public Integer getPopM() {
+		return popM;
+	}
+	public Integer getSizeKM2() {
+		return sizeKM2;
+	}
+	public Float getBirthRate() {
+		return birthRate;
+	}
+	public Integer getAvgElevationMeters() {
+		return avgElevationMeters;
+	}
+	public Boolean getIsLandlocked() {
+		return isLandlocked;
+	}
+	public Integer getGdpM() {
+		return gdpM;
+	}
+	public Integer getImportM() {
+		return importM;
+	}
+	public Integer getExportM() {
+		return exportM;
+	}
+	public Integer getStandingArmyK() {
+		return standingArmyK;
+	}
+	public Integer getNavalDispTons() {
+		return navalDispTons;
+	}
+	public Integer getNumWarplanes() {
+		return numWarplanes;
+	}
+	public Continent getContinent() {
+		return continent;
+	}
+	public Religion getReligion() {
+		return religion;
+	}
+	public Ethnicity getEthnicity() {
+		return ethnicity;
+	}
+	public Language getLanguage() {
+		return language;
+	}
+	public Government getGovernment() {
+		return government;
+	}
+	public TradeBloc getTradeBloc() {
+		return tradeBloc;
+	}
+	public Alliance getAlliance() {
+		return alliance;
+	}
+	
+	
+	
 }
