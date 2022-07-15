@@ -10,6 +10,7 @@ import java.sql.SQLException;
 /**
  * @author zmigliorini
  * Class to handle connecting to MySQL database and executing queries.
+ * @deprecated this code is no longer used as the project has been updated.
  */
 public class DBConn {
 	
@@ -46,6 +47,7 @@ public class DBConn {
 	 * @param url the url of the database
 	 * @param username username for database access
 	 * @param password password for database access
+	 * @deprecated
 	 */
 	public DBConn(String url, String username, String password) {
 		this.url = url;
@@ -56,6 +58,7 @@ public class DBConn {
 	/**
 	 * Attempt to connect to the MySQL database
 	 * @throws SQLException
+	 * @deprecated
 	 */
 	protected void connectDB () throws SQLException {
 		conn = DriverManager.getConnection(url, username, password);
@@ -67,6 +70,7 @@ public class DBConn {
 	 * @param countryName name of the country to retrieve data on
 	 * @return ResultSet object of the single record retrieved
 	 * @throws SQLException
+	 * @deprecated
 	 */
 	protected ResultSet queryCountry(String countryName) throws SQLException {
 		

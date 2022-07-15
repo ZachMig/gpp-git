@@ -1,210 +1,217 @@
 package com.zmigliorini.gpp;
 
-import java.sql.SQLException;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 
 
-@JsonIgnoreProperties(value = {"numColumns"})
+/**
+ * Persistence class for mapping records out of the countries table
+ * @author zmigliorini@gmail.com
+ *
+ */
+@Entity
+@Table(name="countries")
 public class Country {
 	
-	//Number of columns a record in gpp.countries table must have
-	private final int numColumns = 19;
+	public Country () {}
 	
-	private final String name;
-	private final int popM;
-	private final int sizeKM2;
-	private final double birthRate;
-	private final int avgElevationMeters;
-	private final boolean isLandlocked;
-	private final int gdpM;
-	private final int importM;
-	private final int exportM;
-	private final int standingArmyK;
-	private final int navalDispTons;
-	private final int numWarplanes;
-	private final String continent;
-	private final String religion;
-	private final String ethnicity;
-	private final String language;
-	private final String government;
-	private final String tradeBloc;
-	private final String milAlliance;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
 	
-	/**
-	 * 
-	 * @param set A non-null ResultSet object consisting of a header and one record representing a country 
-	 * 	from 'countries' table in 'gpp' database. 
-	 */
-	public Country(ResultSet set) throws IllegalArgumentException {
-		try {
-			set.next(); //Skip the header
-			ResultSetMetaData rsmd = set.getMetaData();
-			
-			//Confirm correct number of columns in set, throw IllegalArgumentException otherwise
-			if (rsmd.getColumnCount() != this.numColumns) {
-				throw new IllegalArgumentException("ResultSet object contains " + rsmd.getColumnCount() 
-					+ " number of columns, Country constructor expecting " + this.numColumns + " number of columns.");
-			}
-			
-			//set is valid, instantiate Country object
-			this.name = set.getString(1);
-			this.popM = set.getInt(2);
-			this.sizeKM2 = set.getInt(3);
-			this.birthRate = set.getDouble(4);
-			this.avgElevationMeters = set.getInt(5);
-			this.isLandlocked = set.getBoolean(6);
-			this.gdpM = set.getInt(7);
-			this.importM = set.getInt(8);
-			this.exportM = set.getInt(9);
-			this.standingArmyK = set.getInt(10);
-			this.navalDispTons = set.getInt(11);
-			this.numWarplanes = set.getInt(12);
-			this.continent = set.getString(13);
-			this.religion = set.getString(14);
-			this.ethnicity = set.getString(15);
-			this.language = set.getString(16);
-			this.government = set.getString(17);
-			this.tradeBloc = set.getString(18);
-			this.milAlliance = set.getString(19);
-			
-		} catch (SQLException e) {
-			System.err.println("Caught SQLException in Country(ResultSet set) constructor.");
-			System.err.println("Error Code = " + e.getErrorCode());
-			System.err.println("SQL state = " + e.getSQLState());
-			System.err.println("Message = " + e.getMessage());
-			e.printStackTrace();
-			throw new IllegalArgumentException("Error attempting to parse ResultSet set in Country constructor");
-		}
-	}
+	@Column(name="name", length=100)
+	private String name;
 	
-	public Country(String name, int popM, int sizeKM2, double birthRate, int avgElevationMeters,
-			boolean isLandlocked, int gdpM, int importM, int exportM, int standingArmyK, int navalDispTons,
-			int numWarplanes, String continent, String religion, String ethnicity, String language, String government,
-			String tradeBloc, String milAlliance) {
-		super();
-		this.name = name;
-		this.popM = popM;
-		this.sizeKM2 = sizeKM2;
-		this.birthRate = birthRate;
-		this.avgElevationMeters = avgElevationMeters;
-		this.isLandlocked = isLandlocked;
-		this.gdpM = gdpM;
-		this.importM = importM;
-		this.exportM = exportM;
-		this.standingArmyK = standingArmyK;
-		this.navalDispTons = navalDispTons;
-		this.numWarplanes = numWarplanes;
-		this.continent = continent;
-		this.religion = religion;
-		this.ethnicity = ethnicity;
-		this.language = language;
-		this.government = government;
-		this.tradeBloc = tradeBloc;
-		this.milAlliance = milAlliance;
-	}
+	@Column(name="pop_m")
+	private Integer popM;
 	
-	public int getNumColumns() {
-		return this.numColumns;
-	}
+	@Column(name="size_km2")
+	private Integer sizeKM2;
+	
+	@Column(name="birth_rate")
+	private Float birthRate;
+	
+	@Column(name="avg_elevation_meters")
+	private Integer avgElevationMeters;
+	
+	@Column(name="is_landlocked")
+	private Boolean isLandlocked;
 
+	@Column(name="gdp_m")
+	private Integer gdpM;
 	
+	@Column(name="import_m")
+	private Integer importM;
+	
+	@Column(name="export_m")
+	private Integer exportM;
+	
+	@Column(name="standing_army_k")
+	private Integer standingArmyK;
+	
+	@Column(name="naval_disp_tons")
+	private Integer navalDispTons;
+	
+	@Column(name="num_warplanes")
+	private Integer numWarplanes;
+	
+	@ManyToOne
+	@JoinColumn(name="continentID", insertable=false, updatable=false)
+	private Continent continent;
+	
+	@ManyToOne
+	@JoinColumn(name="religionID", insertable=false, updatable=false)
+	private Religion religion;
+	
+	@ManyToOne
+	@JoinColumn(name="ethnicityID", insertable=false, updatable=false)
+	private Ethnicity ethnicity;;
+	
+	@ManyToOne
+	@JoinColumn(name="languageID", insertable=false, updatable=false)
+	private Language language;
+	
+	@ManyToOne
+	@JoinColumn(name="governmentID", insertable=false, updatable=false)
+	private Government government;
+	
+	@ManyToOne
+	@JoinColumn(name="trade_blocID", insertable=false, updatable=false)
+	private TradeBloc tradeBloc;
+	
+	@ManyToOne
+	@JoinColumn(name="allianceID", insertable=false, updatable=false)
+	private Alliance alliance;
+	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setPopM(Integer popM) {
+		this.popM = popM;
+	}
+	public void setSizeKM2(Integer sizeKM2) {
+		this.sizeKM2 = sizeKM2;
+	}
+	public void setBirthRate(Float birthRate) {
+		this.birthRate = birthRate;
+	}
+	public void setAvgElevationMeters(Integer avgElevationMeters) {
+		this.avgElevationMeters = avgElevationMeters;
+	}
+	public void setIsLandlocked(Boolean isLandlocked) {
+		this.isLandlocked = isLandlocked;
+	}
+	public void setGdpM(Integer gdpM) {
+		this.gdpM = gdpM;
+	}
+	public void setImportM(Integer importM) {
+		this.importM = importM;
+	}
+	public void setExportM(Integer exportM) {
+		this.exportM = exportM;
+	}
+	public void setStandingArmyK(Integer standingArmyK) {
+		this.standingArmyK = standingArmyK;
+	}
+	public void setNavalDispTons(Integer navalDispTons) {
+		this.navalDispTons = navalDispTons;
+	}
+	public void setNumWarplanes(Integer numWarplanes) {
+		this.numWarplanes = numWarplanes;
+	}
+	public void setContinent(Continent continent) {
+		this.continent = continent;
+	}
+	public void setReligion(Religion religion) {
+		this.religion = religion;
+	}
+	public void setEthnicity(Ethnicity ethnicity) {
+		this.ethnicity = ethnicity;
+	}
+	public void setLanguage(Language language) {
+		this.language = language;
+	}
+	public void setGovernment(Government government) {
+		this.government = government;
+	}
+	public void setTradeBloc(TradeBloc tradeBloc) {
+		this.tradeBloc = tradeBloc;
+	}
+	public void setMilAlliance(Alliance alliance) {
+		this.alliance = alliance;
+	}
+	
+	public Integer getId() {
+		return id;
+	}
 	public String getName() {
 		return name;
 	}
-
-
-	public int getPopM() {
+	public Integer getPopM() {
 		return popM;
 	}
-
-
-	public int getSizeKM2() {
+	public Integer getSizeKM2() {
 		return sizeKM2;
 	}
-
-
-	public double getBirthRate() {
+	public Float getBirthRate() {
 		return birthRate;
 	}
-
-
-	public int getAvgElevationMeters() {
+	public Integer getAvgElevationMeters() {
 		return avgElevationMeters;
 	}
-
-
-	public boolean getIsLandlocked() {
+	public Boolean getIsLandlocked() {
 		return isLandlocked;
 	}
-
-
-	public int getGdpM() {
+	public Integer getGdpM() {
 		return gdpM;
 	}
-
-
-	public int getImportM() {
+	public Integer getImportM() {
 		return importM;
 	}
-
-
-	public int getExportM() {
+	public Integer getExportM() {
 		return exportM;
 	}
-
-
-	public int getStandingArmyK() {
+	public Integer getStandingArmyK() {
 		return standingArmyK;
 	}
-
-
-	public int getNavalDispTons() {
+	public Integer getNavalDispTons() {
 		return navalDispTons;
 	}
-
-
-	public int getNumWarplanes() {
+	public Integer getNumWarplanes() {
 		return numWarplanes;
 	}
-
-
-	public String getContinent() {
+	public Continent getContinent() {
 		return continent;
 	}
-
-
-	public String getReligion() {
+	public Religion getReligion() {
 		return religion;
 	}
-
-
-	public String getEthnicity() {
+	public Ethnicity getEthnicity() {
 		return ethnicity;
 	}
-
-
-	public String getLanguage() {
+	public Language getLanguage() {
 		return language;
 	}
-
-
-	public String getGovernment() {
+	public Government getGovernment() {
 		return government;
 	}
-
-
-	public String getTradeBloc() {
+	public TradeBloc getTradeBloc() {
 		return tradeBloc;
 	}
-
-
-	public String getMilAlliance() {
-		return milAlliance;
+	public Alliance getAlliance() {
+		return alliance;
 	}
-
+	
+	
 	
 }
