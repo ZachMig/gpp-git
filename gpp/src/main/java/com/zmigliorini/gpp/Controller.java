@@ -6,7 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+/**
+ * Rest Controller which will handle get requests containing a country name
+ * 	and respond with a JSON containing information about the country.
+ * Requests should be formatted as in this example: localhost:8080/country?name=United_States_of_America
+ * @author zmigliorini@gmail.com
+ *
+ */
 @RestController
 public class Controller {
 	@Autowired
@@ -15,8 +21,10 @@ public class Controller {
 	
 	/**
 	 * 
+	 * Method to process HTTP GET requests that end in /country?name=COUNTRYNAME
+	 * 
 	 * @param name country name as HTTP GET parameter
-	 * 	When provided by client, whitespace should be replaced by underlines 
+	 * 	When provided by client, whitespace in between words should be replaced by underlines 
 	 * 	and this method will expect and handle underlines.
 	 * @return a Country object for JSON serialization, or NULL if there is 
 	 * 	a problem creating the object or locating the record in DB.

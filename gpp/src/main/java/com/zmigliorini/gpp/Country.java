@@ -10,6 +10,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
+
+/**
+ * Persistence class for mapping records out of the countries table
+ * @author zmigliorini@gmail.com
+ *
+ */
 @Entity
 @Table(name="countries")
 public class Country {
